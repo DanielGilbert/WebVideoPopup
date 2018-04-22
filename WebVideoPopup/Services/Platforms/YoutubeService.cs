@@ -29,7 +29,7 @@ namespace WebVideoPopup.Services.Platforms
 
             if (youtubeMatch.Success)
             {
-                id = youtubeMatch.Groups[1].Value;
+                id = youtubeMatch.Groups[youtubeMatch.Groups.Count-1].Value;
                 return new WebVideoWrapper
                 {
                     WebVideoType = WebVideoType.Url,
