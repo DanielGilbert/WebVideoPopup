@@ -79,6 +79,13 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="Extensions\TypeLoaderExtensions.cs" />
+    <Compile Include="Models\WebVideoWrapper.cs" />
+    <Compile Include="Services\Interfaces\IWebVideoService.cs" />
+    <Compile Include="Services\Platforms\TwitchService.cs" />
+    <Compile Include="Services\Platforms\YoutubeService.cs" />
+    <Compile Include="Services\ServiceHandler.cs" />
+    <Compile Include="Types\WebVideoType.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -21,7 +21,7 @@ namespace WebVideoPopup
 
             if (e.Args.Count() > 0)
             {
-                TargetUrl = String.Format(@"https://www.youtube.com/embed/{0}", e.Args[0]);
+                TargetUrl = e.Args[0];
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebVideoPopup.Models;
+using WebVideoPopup.Services;
+using WebVideoPopup.Services.Interfaces;
 
 namespace WebVideoPopup
 {
@@ -22,12 +26,15 @@ namespace WebVideoPopup
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private IWebVideoService WebVideoService { get; set; }
+
         private string _targetUrl;
         public string TargetUrl
         {
             get => _targetUrl;
             set => SetField(ref _targetUrl, value, nameof(TargetUrl));
         }
+        public WebVideoWrapper WebVideoWrapper { get; private set; }
 
         public MainWindow()
         {
@@ -35,7 +42,8 @@ namespace WebVideoPopup
 
             this.DataContext = this;
 
-            TargetUrl = App.TargetUrl;
+            WebVideoService = ServiceHandler.GetCorrespondingService(Assembly.GetExecutingAssembly(), App.TargetUrl);
+            WebVideoWrapper = WebVideoService.Parse(App.TargetUrl);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,6 +63,23 @@ namespace WebVideoPopup
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (WebVideoService == null) return;
+
+            switch (WebVideoService.WebVideoType)
+            {
+                case Types.WebVideoType.Url:
+                    TargetUrl = WebVideoWrapper.TargetUrl;
+                    break;
+                case Types.WebVideoType.Webpage:
+                    CefSharp.WebBrowserExtensions.LoadHtml(webVideoBrowser, WebVideoWrapper.HtmlCode, WebVideoWrapper.TargetUrl);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -6,8 +6,8 @@
         xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         xmlns:local="clr-namespace:WebVideoPopup"
         mc:Ignorable="d"
-        Title="WebVideoPopup" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="None" MouseDown="Window_MouseDown">
+        Title="WebVideoPopup" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterScreen" WindowStyle="None" MouseDown="Window_MouseDown" Loaded="Window_Loaded">
     <Grid>
-        <cefSharp:ChromiumWebBrowser local:EnableDragHelper.EnableDrag="True" Grid.Row="0" Address="{Binding TargetUrl, Mode=TwoWay}" />
+        <cefSharp:ChromiumWebBrowser x:Name="webVideoBrowser" local:EnableDragHelper.EnableDrag="True" Grid.Row="0" Address="{Binding TargetUrl, Mode=TwoWay}" />
     </Grid>
 </Window>
